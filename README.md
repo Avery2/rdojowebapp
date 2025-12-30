@@ -4,7 +4,7 @@ A timer app for scoring Rdojo Kombat sparring matches.
 
 ## Quick Start
 
-**Use Online:** [Link will be added when hosted]
+**Use Online:** www.averychan.site/rdojowebapp/
 
 **Use Locally:** Download this folder and open `index.html` in your web browser (Chrome, Firefox, Safari, etc.)
 
