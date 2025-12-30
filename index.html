@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rdojo Kombat Timer</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Mobile Sticky Header -->
+    <div class="mobile-header" id="mobileHeader">
+        <div class="mobile-fighter">
+            <div class="mobile-fighter-name" id="mobileNameA">Fighter A</div>
+            <div class="mobile-score" id="mobileScoreA">0</div>
+            <div class="mobile-countdown" id="mobileCountdownA" style="display: none;"></div>
+        </div>
+        <div class="mobile-timer">
+            <div class="mobile-round" id="mobileRound">R1</div>
+            <div class="mobile-time" id="mobileTime">3:00</div>
+        </div>
+        <div class="mobile-fighter">
+            <div class="mobile-fighter-name" id="mobileNameB">Fighter B</div>
+            <div class="mobile-score" id="mobileScoreB">0</div>
+            <div class="mobile-countdown" id="mobileCountdownB" style="display: none;"></div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="header">
+            <h1>RDOJO KOMBAT TIMER</h1>
+            <div class="match-status" id="matchStatus">Ready to Start</div>
+        </div>
+
+        <div class="main-grid">
+            <!-- Fighter A -->
+            <div class="fighter-card fighter-a" id="fighterACard">
+                <div class="fighter-name" id="fighterANameDisplay">Fighter A</div>
+                <div class="fighter-score" id="scoreA">0</div>
+                <div class="fighter-countdown" id="countdownA"></div>
+                <div class="rounds-won">
+                    Rounds Won: <span id="roundsWonA">0</span>
+                    <div class="rounds-indicator">
+                        <div class="round-dot" id="roundDotA1"></div>
+                        <div class="round-dot" id="roundDotA2"></div>
+                        <div class="round-dot" id="roundDotA3"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Timer Section -->
+            <div class="timer-section">
+                <div class="round-info" id="roundInfo">Round 1 of 3 (Max: 30 pts)</div>
+                <div class="timer" id="timer">3:00</div>
+                <div class="button-group">
+                    <button class="btn-primary" id="startBtn" onclick="startMatch()">Start Match</button>
+                    <button class="btn-warning" id="pauseBtn" onclick="togglePause()" disabled>Pause</button>
+                    <button class="btn-danger" id="resetBtn" onclick="showResetOptions()">Reset</button>
+                    <button class="btn-secondary" id="settingsBtn" onclick="toggleSettings()">Settings</button>
+                </div>
+            </div>
+
+            <!-- Fighter B -->
+            <div class="fighter-card fighter-b" id="fighterBCard">
+                <div class="fighter-name" id="fighterBNameDisplay">Fighter B</div>
+                <div class="fighter-score" id="scoreB">0</div>
+                <div class="fighter-countdown" id="countdownB"></div>
+                <div class="rounds-won">
+                    Rounds Won: <span id="roundsWonB">0</span>
+                    <div class="rounds-indicator">
+                        <div class="round-dot" id="roundDotB1"></div>
+                        <div class="round-dot" id="roundDotB2"></div>
+                        <div class="round-dot" id="roundDotB3"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Controls -->
+        <div class="controls">
+            <div class="control-section">
+                <h3>Control Position <span class="keyboard-hint">(← ↓ →) or (1 2 3)</span></h3>
+                <div class="button-group">
+                    <button class="btn-fighter-a" id="controlABtn" onclick="setControl('A')">
+                        <span id="controlABtnLabel">Fighter A</span>
+                        <span class="key-hint">← / 1</span>
+                    </button>
+                    <button class="btn-neutral btn-active" id="controlNoneBtn" onclick="setControl('none')">
+                        No Control
+                        <span class="key-hint">↓ / 2</span>
+                    </button>
+                    <button class="btn-fighter-b" id="controlBBtn" onclick="setControl('B')">
+                        <span id="controlBBtnLabel">Fighter B</span>
+                        <span class="key-hint">→ / 3</span>
+                    </button>
+                </div>
+            </div>
+
+            <div class="control-section">
+                <h3>End Round</h3>
+                <div class="button-group">
+                    <button class="btn-danger" onclick="showRoundEndModal('submission')">
+                        Submission
+                    </button>
+                    <button class="btn-danger" onclick="showRoundEndModal('stoppage')">
+                        Stoppage
+                    </button>
+                </div>
+            </div>
+
+            <div class="keyboard-shortcuts">
+                <strong>Keyboard Shortcuts:</strong>
+                <span>Space = Start/Pause</span>
+                <span>← or 1 = Fighter A Control</span>
+                <span>↓ or 2 = No Control</span>
+                <span>→ or 3 = Fighter B Control</span>
+                <span>S = Settings</span>
+            </div>
+        </div>
+
+        <!-- Round History -->
+        <div class="round-history" id="roundHistory" style="display: none;">
+            <h3>Round History</h3>
+            <div id="historyList"></div>
+        </div>
+
+        <!-- Match Winner -->
+        <div class="match-winner" id="matchWinner" style="display: none;">
+            <h2>🏆 MATCH WINNER 🏆</h2>
+            <div id="winnerText" style="font-size: 2rem; margin-top: 15px;"></div>
+        </div>
+    </div>
+
+    <!-- Round End Modal -->
+    <div class="modal round-end-modal" id="roundEndModal" style="display: none;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="roundEndTitle">End Round</h2>
+                <button class="modal-close" onclick="closeRoundEndModal()">×</button>
+            </div>
+            <div class="modal-body">
+                <h3>Which fighter won?</h3>
+                <div class="button-group">
+                    <button class="btn-fighter-a" id="roundEndFighterA" onclick="confirmRoundEnd('A')">
+                        Fighter A
+                    </button>
+                    <button class="btn-fighter-b" id="roundEndFighterB" onclick="confirmRoundEnd('B')">
+                        Fighter B
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Settings Modal -->
+    <div class="modal" id="settingsModal" style="display: none;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Settings</h2>
+                <button class="modal-close" onclick="toggleSettings()">×</button>
+            </div>
+            <div class="modal-body">
+                <div class="settings-section">
+                    <h3>Fighter Names</h3>
+                    <div class="input-group">
+                        <label for="fighterANameInput">Fighter A Name:</label>
+                        <input type="text" id="fighterANameInput" placeholder="Fighter A" maxlength="20">
+                    </div>
+                    <div class="input-group">
+                        <label for="fighterBNameInput">Fighter B Name:</label>
+                        <input type="text" id="fighterBNameInput" placeholder="Fighter B" maxlength="20">
+                    </div>
+                </div>
+                <div class="settings-section">
+                    <h3>Edit Current Round Scores</h3>
+                    <div class="input-group">
+                        <label for="editScoreA">Fighter A Score:</label>
+                        <input type="number" id="editScoreA" min="0" value="0">
+                    </div>
+                    <div class="input-group">
+                        <label for="editScoreB">Fighter B Score:</label>
+                        <input type="number" id="editScoreB" min="0" value="0">
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-primary" onclick="saveSettings()">Save Changes</button>
+                <button class="btn-secondary" onclick="toggleSettings()">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript Files -->
+    <script src="config.js"></script>
+    <script src="state.js"></script>
+    <script src="game-logic.js"></script>
+    <script src="app.js"></script>
+    <script src="mobile.js"></script>
+</body>
+</html>
