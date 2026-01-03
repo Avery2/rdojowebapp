@@ -151,6 +151,40 @@
         </div>
     </div>
 
+    <!-- Reset Modal -->
+    <div class="modal" id="resetModal" style="display: none;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Reset Options</h2>
+                <button class="modal-close" onclick="closeResetModal()">×</button>
+            </div>
+            <div class="modal-body">
+                <h3>Choose what you want to reset:</h3>
+                <div class="button-group" style="flex-direction: column; gap: 15px; margin-top: 20px;">
+                    <button class="btn-danger" onclick="confirmReset('full')" style="width: 100%; padding: 20px;">
+                        <div style="font-size: 1.2rem; margin-bottom: 5px;">Reset Entire Match</div>
+                        <div style="font-size: 0.85rem; opacity: 0.9; text-transform: none; font-weight: normal;">Clear all rounds and start fresh</div>
+                    </button>
+                    <button class="btn-warning" onclick="confirmReset('round1')" style="width: 100%; padding: 20px;">
+                        <div style="font-size: 1.2rem; margin-bottom: 5px;">Reset from Round 1</div>
+                        <div style="font-size: 0.85rem; opacity: 0.9; text-transform: none; font-weight: normal;">Keep fighter names, clear all progress</div>
+                    </button>
+                    <button class="btn-warning" onclick="confirmReset('round2')" style="width: 100%; padding: 20px;">
+                        <div style="font-size: 1.2rem; margin-bottom: 5px;">Reset from Round 2</div>
+                        <div style="font-size: 0.85rem; opacity: 0.9; text-transform: none; font-weight: normal;">Keep Round 1 results, reset from Round 2</div>
+                    </button>
+                    <button class="btn-warning" onclick="confirmReset('round3')" style="width: 100%; padding: 20px;">
+                        <div style="font-size: 1.2rem; margin-bottom: 5px;">Reset from Round 3</div>
+                        <div style="font-size: 0.85rem; opacity: 0.9; text-transform: none; font-weight: normal;">Keep Rounds 1-2 results, reset Round 3</div>
+                    </button>
+                    <button class="btn-secondary" onclick="closeResetModal()" style="width: 100%; padding: 15px;">
+                        Cancel
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- Settings Modal -->
     <div class="modal" id="settingsModal" style="display: none;">
         <div class="modal-content">
