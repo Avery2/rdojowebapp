@@ -158,32 +158,32 @@ function updateDisplay() {
 // ==================== UI CONTROLS ====================
 
 function showResetOptions() {
-    const choice = prompt(
-        'Choose reset option:\n' +
-        '1: Reset entire match\n' +
-        '2: Reset from Round 1\n' +
-        '3: Reset from Round 2\n' +
-        '4: Reset from Round 3\n' +
-        '5: Cancel'
-    );
+    document.getElementById('resetModal').style.display = 'flex';
+}
 
-    switch(choice) {
-        case '1':
+function closeResetModal() {
+    document.getElementById('resetModal').style.display = 'none';
+}
+
+function confirmReset(option) {
+    switch(option) {
+        case 'full':
             resetMatch();
             break;
-        case '2':
+        case 'round1':
             resetFromRound(0);
             updateDisplay();
             break;
-        case '3':
+        case 'round2':
             resetFromRound(1);
             updateDisplay();
             break;
-        case '4':
+        case 'round3':
             resetFromRound(2);
             updateDisplay();
             break;
     }
+    closeResetModal();
 }
 
 function toggleSettings() {
