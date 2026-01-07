@@ -278,6 +278,59 @@ function confirmRoundEnd(fighter) {
     closeRoundEndModal();
 }
 
+// ==================== MULTIPLAYER MODAL ====================
+
+function toggleMultiplayer() {
+    const modal = document.getElementById('multiplayerModal');
+    modal.style.display = modal.style.display === 'flex' ? 'none' : 'flex';
+    showMultiplayerOptions();
+}
+
+function closeMultiplayerModal() {
+    document.getElementById('multiplayerModal').style.display = 'none';
+}
+
+function showMultiplayerOptions() {
+    document.getElementById('multiplayerOptions').style.display = 'block';
+    document.getElementById('hostRoomSection').style.display = 'none';
+    document.getElementById('joinRoomSection').style.display = 'none';
+}
+
+function createMultiplayerRoom() {
+    simpleMultiplayer.createRoom();
+    document.getElementById('multiplayerOptions').style.display = 'none';
+    document.getElementById('hostRoomSection').style.display = 'block';
+    document.getElementById('roomCodeDisplay').textContent = simpleMultiplayer.roomCode;
+
+    // Update status
+    const statusEl = document.getElementById('multiplayerStatus');
+    statusEl.textContent = `Hosting room: ${simpleMultiplayer.roomCode}`;
+    statusEl.style.display = 'block';
+    statusEl.style.color = '#4CAF50';
+}
+
+function showJoinRoom() {
+    document.getElementById('multiplayerOptions').style.display = 'none';
+    document.getElementById('joinRoomSection').style.display = 'block';
+}
+
+function joinMultiplayerRoom() {
+    const code = document.getElementById('roomCodeInput').value.trim().toUpperCase();
+    if (code.length !== 6) {
+        alert('Please enter a 6-character room code');
+        return;
+    }
+
+    simpleMultiplayer.joinRoom(code);
+    closeMultiplayerModal();
+
+    // Update status
+    const statusEl = document.getElementById('multiplayerStatus');
+    statusEl.textContent = `Joined room: ${code}`;
+    statusEl.style.display = 'block';
+    statusEl.style.color = '#2196F3';
+}
+
 // ==================== INITIALIZATION ====================
 document.addEventListener('DOMContentLoaded', () => {
     // Load saved state from localStorage
@@ -292,6 +345,20 @@ document.addEventListener('DOMContentLoaded', () => {
         state.lastControlTick = Date.now();
         startTimers();
     }
+
+    // Initialize audio on first user interaction (required for mobile browsers)
+    const initAudio = () => {
+        if (typeof soundManager !== 'undefined') {
+            soundManager.init();
+        }
+        // Remove listeners after first interaction
+        document.removeEventListener('click', initAudio);
+        document.removeEventListener('touchstart', initAudio);
+        document.removeEventListener('keydown', initAudio);
+    };
+    document.addEventListener('click', initAudio);
+    document.addEventListener('touchstart', initAudio);
+    document.addEventListener('keydown', initAudio);
 
     // Initial display update
     updateDisplay();

@@ -73,6 +73,11 @@ function togglePause() {
 
 // Handle timer reaching zero
 function handleTimerEnd() {
+    // Play sound notification
+    if (typeof soundManager !== 'undefined') {
+        soundManager.playTimerEndSound();
+    }
+
     if (state.isRest) {
         // Rest period ended, start next round
         state.currentRound++;

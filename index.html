@@ -56,7 +56,9 @@
                     <button class="btn-warning" id="pauseBtn" onclick="togglePause()" disabled>Pause</button>
                     <button class="btn-danger" id="resetBtn" onclick="showResetOptions()">Reset</button>
                     <button class="btn-secondary" id="settingsBtn" onclick="toggleSettings()">Settings</button>
+                    <button class="btn-multiplayer" id="multiplayerBtn" onclick="toggleMultiplayer()">Multiplayer</button>
                 </div>
+                <div id="multiplayerStatus" class="multiplayer-status"></div>
             </div>
 
             <!-- Fighter B -->
@@ -223,6 +225,61 @@
         </div>
     </div>
 
+    <!-- Multiplayer Modal -->
+    <div class="modal" id="multiplayerModal" style="display: none;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Multiplayer Timer</h2>
+                <button class="modal-close" onclick="closeMultiplayerModal()">×</button>
+            </div>
+            <div class="modal-body">
+                <div id="multiplayerOptions">
+                    <h3>Share timer with a friend</h3>
+                    <p style="font-size: 0.9rem; opacity: 0.8; margin-bottom: 20px;">
+                        Both devices will see the same timer. Only the host can control it.
+                    </p>
+                    <div class="button-group" style="flex-direction: column; gap: 15px;">
+                        <button class="btn-primary" onclick="createMultiplayerRoom()" style="width: 100%; padding: 20px;">
+                            <div style="font-size: 1.2rem; margin-bottom: 5px;">Host Timer</div>
+                            <div style="font-size: 0.85rem; opacity: 0.9; text-transform: none; font-weight: normal;">Create a room and share the code</div>
+                        </button>
+                        <button class="btn-secondary" onclick="showJoinRoom()" style="width: 100%; padding: 20px;">
+                            <div style="font-size: 1.2rem; margin-bottom: 5px;">Join Timer</div>
+                            <div style="font-size: 0.85rem; opacity: 0.9; text-transform: none; font-weight: normal;">Enter a room code to join</div>
+                        </button>
+                    </div>
+                </div>
+
+                <div id="hostRoomSection" style="display: none;">
+                    <h3>Room Created!</h3>
+                    <p style="font-size: 0.9rem; opacity: 0.8; margin-bottom: 15px;">
+                        Share this code with your friend:
+                    </p>
+                    <div style="background: #2a2a2a; padding: 30px; border-radius: 8px; text-align: center; margin-bottom: 20px;">
+                        <div style="font-size: 3rem; font-weight: bold; letter-spacing: 8px; color: #4CAF50;" id="roomCodeDisplay">ABC123</div>
+                    </div>
+                    <p style="font-size: 0.85rem; opacity: 0.7; margin-bottom: 20px;">
+                        Your friend should click "Join Timer" and enter this code. You can control the timer, and they'll see it update in real-time.
+                    </p>
+                    <button class="btn-primary" onclick="closeMultiplayerModal()" style="width: 100%;">Start Timer</button>
+                </div>
+
+                <div id="joinRoomSection" style="display: none;">
+                    <h3>Join Timer Room</h3>
+                    <p style="font-size: 0.9rem; opacity: 0.8; margin-bottom: 15px;">
+                        Enter the room code from your friend:
+                    </p>
+                    <input type="text" id="roomCodeInput" placeholder="Enter 6-character code" maxlength="6"
+                           style="width: 100%; padding: 15px; font-size: 1.2rem; text-align: center; letter-spacing: 4px; margin-bottom: 20px; text-transform: uppercase;">
+                    <div class="button-group" style="gap: 10px;">
+                        <button class="btn-primary" onclick="joinMultiplayerRoom()">Join</button>
+                        <button class="btn-secondary" onclick="showMultiplayerOptions()">Back</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <footer style="text-align: center;">
     <a href="https://github.com/Avery2/rdojowebapp">Github</a>
 </footer>
@@ -230,7 +287,9 @@
     <!-- JavaScript Files -->
     <script src="config.js"></script>
     <script src="state.js"></script>
+    <script src="sound.js"></script>
     <script src="game-logic.js"></script>
+    <script src="simple-multiplayer.js"></script>
     <script src="app.js"></script>
     <script src="mobile.js"></script>
 </body>

@@ -1,6 +1,14 @@
 # Rdojo Kombat Timer
 
-A timer app for scoring Rdojo Kombat sparring matches.
+A timer app for scoring Rdojo Kombat sparring matches with multiplayer support and sound notifications.
+
+## Features
+
+- **Automatic Timer** - Timer runs automatically with round and rest periods
+- **Sound Notifications** - Loud alarm when timer ends (works on mobile and web)
+- **Multiplayer Mode** - Share timer with a friend using room codes
+- **Auto-save** - Never lose your match progress
+- **Mobile Friendly** - Responsive design with sticky header
 
 ## Quick Start
 
@@ -32,10 +40,23 @@ A timer app for scoring Rdojo Kombat sparring matches.
 - **S** = Open settings
 - **Reset** = Start over from any round
 
+### Multiplayer Mode (NEW!)
+
+Use the timer with a friend on different devices:
+
+1. **Host** clicks **Multiplayer** → **Host Timer**
+2. Share the **6-character room code** with your friend
+3. **Guest** clicks **Multiplayer** → **Join Timer** and enters the code
+4. Both devices will now see the same timer in real-time!
+
+**Note:** Only the host can control the timer. The guest sees updates in real-time.
+
 ### Important Notes
 - The app auto-saves your match - you can refresh without losing anything
+- Sound notifications work best after you interact with the page (click/tap)
 - On mobile, scores and timer stay visible at the top while scrolling
 - Customize round durations and points in `config.js` if needed
+- Multiplayer uses localStorage for sync (same device/network recommended)
 
 ## Support
 
