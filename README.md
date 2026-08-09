@@ -2,6 +2,9 @@
 
 A timer app for scoring Rdojo Kombat sparring matches.
 
+- Site https://www.rdojo.com/kombat
+- Rules https://docs.google.com/document/d/e/2PACX-1vS5HqSPO-t3bE6pGpcyaTLcQhC8TH3K7YTmBZieiyzm5mFa_mLykbsV6GbQS0ueL6WGN0_bJz5daIgi/pub
+
 ## Quick Start
 
 **Use Online:** www.averychan.site/rdojowebapp/
